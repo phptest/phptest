@@ -17,8 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class FileSystemController implements ControllerInterface
 {
-    const ARG_FILE      = 'file';
-    const ID_CONTROLLER = 'fs.controller';
+    const ARG_FILE = 'file';
 
     /**
      * @param Command $command
