@@ -16,6 +16,6 @@ if (!empty($autoload)) {
     exit(1);
 }
 
-$packageJson = file_get_contents(reset($package);
-$application = new Application(json_decode($packageJson), true));
+$packageJson = file_get_contents(reset($package));
+$application = new Application(json_decode($packageJson, true));
 $application->run();
