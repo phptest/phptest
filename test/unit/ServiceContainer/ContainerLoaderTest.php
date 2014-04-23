@@ -10,6 +10,7 @@ class ContainerLoaderTest extends TestCase
     public function setup()
     {
         $this->container = Mockery::mock('Symfony\Component\DependencyInjection\ContainerBuilder');
+        $this->helper = Mockery::mock('PhpTest\ServiceContainer\ContainerHelper');
         $this->manager = Mockery::mock('PhpTest\ServiceContainer\ExtensionManager');
 
         $this->extensionA = Mockery::mock('PhpTest\ServiceContainer\ExtensionInterface');
@@ -17,7 +18,7 @@ class ContainerLoaderTest extends TestCase
         $this->extensionC = Mockery::mock('PhpTest\ServiceContainer\ExtensionInterface');
         $this->extensions = [$this->extensionA, $this->extensionB, $this->extensionC];
 
-        $this->loader = new ContainerLoader($this->manager);
+        $this->loader = new ContainerLoader($this->manager, $this->helper);
     }
 
     public function dataLoadRecursivelyInitializesExtensions()

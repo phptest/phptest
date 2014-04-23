@@ -41,6 +41,7 @@ interface ExtensionInterface
      * use cases include setting tagged services and validating services exist.
      *
      * @param ContainerBuilder $container
+     * @param ContainerHelper $helper
      */
-    public function process(ContainerBuilder $container);
+    public function process(ContainerBuilder $container, ContainerHelper $helper);
 }

@@ -17,6 +17,11 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 class ContainerLoader
 {
     /**
+     * @var ContainerHelper
+     */
+    protected $helper;
+
+    /**
      * @var ExtensionManager
      */
     protected $manager;
@@ -25,9 +30,10 @@ class ContainerLoader
      * @param ExtensionManager $manager
      * @param ContainerHelper $helper
      */
-    public function __construct(ExtensionManager $manager)
+    public function __construct(ExtensionManager $manager, ContainerHelper $helper = null)
     {
         $this->manager = $manager;
+        $this->helper = $helper ?: new ContainerHelper();
     }
 
     /**
@@ -82,7 +88,7 @@ class ContainerLoader
     protected function registerCompilerPasses(ContainerBuilder $container)
     {
         foreach ($this->manager->getExtensions() as $extension) {
-            $pass = new ExtensionCompilerPass($extension);
+            $pass = new ExtensionCompilerPass($extension, $this->helper);
             $container->addCompilerPass($pass);
         }
     }

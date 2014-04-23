@@ -9,6 +9,7 @@
  */
 namespace PhpTest\ServiceContainer\Compiler;
 
+use PhpTest\ServiceContainer\ContainerHelper;
 use PhpTest\ServiceContainer\ExtensionInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -21,10 +22,17 @@ class ExtensionCompilerPass implements CompilerPassInterface
     protected $extension;
 
     /**
-     * @param ExtensionInterface $extension
+     * @var ContainerHelper
      */
-    public function __construct(ExtensionInterface $extension)
+    protected $helper;
+
+    /**
+     * @param ExtensionInterface $extension
+     * @param ContainerHelper $helper
+     */
+    public function __construct(ExtensionInterface $extension, ContainerHelper $helper)
     {
+        $this->helper = $helper;
         $this->extension = $extension;
     }
 
@@ -33,6 +41,6 @@ class ExtensionCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $this->extension->process($container);
+        $this->extension->process($container, $this->helper);
     }
 }
