@@ -17,9 +17,39 @@ class RunCommand extends Command
 {
     const NAME = Application::NAME;
 
-    public function __construct()
+    /**
+     * @var ControllerInterface[]
+     */
+    protected $controllers = [];
+
+    /**
+     * @param ControllerInterface[] $controllers
+     */
+    public function __construct(array $controllers)
     {
-        parent::__construct(self::NAME);
+        foreach ($controllers as $controller) {
+            $this->addController($controller);
+        }
+
+        parent::__construct(Application::NAME);
+    }
+
+    /**
+     * @param ControllerInterface $controller
+     */
+    public function addController(ControllerInterface $controller)
+    {
+        $this->controllers[] = $controller;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function configure()
+    {
+        foreach ($this->controllers as $controller) {
+            $controller->configure($this);
+        }
     }
 
     /**
@@ -27,6 +57,14 @@ class RunCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('--> Insert magic here <--');
+        foreach ($this->controllers as $controller) {
+            $code = (integer) $controller->execute($input, $output);
+
+            if (0 !== $code) {
+                return $code;
+            }
+        }
+
+        return 0;
     }
 }

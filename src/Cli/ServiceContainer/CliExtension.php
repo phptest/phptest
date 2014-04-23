@@ -28,6 +28,7 @@ class CliExtension extends AbstractExtension
     public function load(ContainerBuilder $container)
     {
         $this->loadCommand($container);
+        $this->loadController($container);
         $this->loadIo($container);
     }
 
