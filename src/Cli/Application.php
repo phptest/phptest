@@ -9,6 +9,7 @@
  */
 namespace PhpTest\Cli;
 
+use PhpTest\Cli\ServiceContainer\CliExtension;
 use PhpTest\ServiceContainer\ContainerLoader;
 use PhpTest\ServiceContainer\ExtensionManager;
 use Symfony\Component\Console;

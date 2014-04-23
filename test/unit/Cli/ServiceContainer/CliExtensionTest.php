@@ -1,5 +1,5 @@
 <?php
-namespace PhpTest\Cli;
+namespace PhpTest\Cli\ServiceContainer;
 
 use Mockery;
 use PHPUnit_Framework_TestCase as TestCase;

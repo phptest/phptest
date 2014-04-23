@@ -7,7 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace PhpTest\Cli;
+namespace PhpTest\Cli\ServiceContainer;
 
 use PhpTest\ServiceContainer\AbstractExtension;
 use PhpTest\ServiceContainer\ContainerHelper;
@@ -47,6 +47,16 @@ class CliExtension extends AbstractExtension
     {
         $def = new Definition('PhpTest\Cli\RunCommand', [[]]);
         $container->setDefinition(self::ID_COMMAND, $def);
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     */
+    protected function loadController(ContainerBuilder $container)
+    {
+        $def = new Definition('PhpTest\Cli\CliController');
+        $def->addTag(self::TAG_CONTROLLER);
+        $container->setDefinition(self::ID_CONTROLLER, $def);
     }
 
     /**
