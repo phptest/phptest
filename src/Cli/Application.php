@@ -10,6 +10,7 @@
 namespace PhpTest\Cli;
 
 use PhpTest\Cli\ServiceContainer\CliExtension;
+use PhpTest\FileSystem\ServiceContainer\FileSystemExtension;
 use PhpTest\ServiceContainer\ContainerLoader;
 use PhpTest\ServiceContainer\ExtensionManager;
 use Symfony\Component\Console;
@@ -81,7 +82,8 @@ class Application extends Console\Application
     protected function buildExtensionManager()
     {
         return new ExtensionManager([
-            new CliExtension()
+            new CliExtension(),
+            new FileSystemExtension()
         ]);
     }
 
