@@ -1,0 +1,37 @@
+{
+    "name": "phptest/phptest",
+    "description": "Really simple test harness for PHP",
+    "keywords": [
+        "functional",
+        "harness",
+        "test",
+        "testing",
+        "tests",
+        "unit"
+    ],
+    "homepage": "http://phptest.github.io",
+    "version": "1.0.0-dev",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Andrew Lawson",
+            "homepage": "http://adlawson.com"
+        },
+        {
+            "name": "Public contributors",
+            "homepage": "https://github.com/phptest/phptest/graphs/contributors"
+        }
+    ],
+    "bin": [
+        "bin/phptest"
+    ],
+    "autoload": {
+        "psr-4": {
+            "PhpTest\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.4.0"
+    }
+}

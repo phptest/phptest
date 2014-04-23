@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+use PhpTest\Cli\Application;
+
+$autoload = array_filter([__DIR__ . '/../../../autoload.php', __DIR__ . '/../vendor/autoload.php'], 'is_file');
+$package = array_filter([__DIR__ . '/../phptest/phptest/composer.json', __DIR__ . '/../composer.json'], 'is_file');
+
+if (!empty($autoload)) {
+    require reset($autoload);
+} else {
+    fwrite(STDERR,
+        'You must set up the project dependencies. Run the following commands:' . PHP_EOL .
+        'curl -s http://getcomposer.org/installer | php' . PHP_EOL .
+        'php composer.phar install' . PHP_EOL
+    );
+    exit(1);
+}
+
+$packageJson = file_get_contents(reset($package);
+$application = new Application(json_decode($packageJson), true));
+$application->run();
