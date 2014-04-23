@@ -1,0 +1,35 @@
+{
+    "name": "phptest/service-container",
+    "description": "Extensible service container",
+    "keywords": [
+        "container",
+        "dependency",
+        "di",
+        "injection",
+        "ioc",
+        "phptest",
+        "service"
+    ],
+    "homepage": "http://phptest.github.io/components/service-container",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Andrew Lawson",
+            "homepage": "http://adlawson.com"
+        },
+        {
+            "name": "Public contributors",
+            "homepage": "https://github.com/phptest/phptest/graphs/contributors"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "PhpTest\\ServiceContainer\\": ""
+        }
+    },
+    "require": {
+        "php": ">=5.4.0",
+        "symfony/dependency-injection": "~2.4.0"
+    }
+}
