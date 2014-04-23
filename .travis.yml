@@ -10,5 +10,4 @@ before_script:
   - composer install --dev
 
 script:
-  - true
-  # - bin/phptest
+  - vendor/bin/phpunit
