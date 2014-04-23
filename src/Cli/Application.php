@@ -40,7 +40,10 @@ class Application extends Console\Application
      */
     public function getDefaultInputDefinition()
     {
-        return new InputDefinition();
+        return new InputDefinition([
+            new InputOption('--help', '-h', InputOption::VALUE_NONE, 'Display this help message.'),
+            new InputOption('--version', null, InputOption::VALUE_NONE, 'Display the current version.'),
+        ]);
     }
 
     /**
