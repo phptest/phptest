@@ -10,7 +10,7 @@
         "phptest",
         "service"
     ],
-    "homepage": "http://phptest.github.io/components/service-container",
+    "homepage": "https://phptest.github.io/components/service-container",
     "license": "MIT",
     "type": "library",
     "authors": [

@@ -9,7 +9,7 @@
         "tests",
         "unit"
     ],
-    "homepage": "http://phptest.github.io",
+    "homepage": "https://phptest.github.io",
     "version": "1.0.0-dev",
     "license": "MIT",
     "type": "library",
