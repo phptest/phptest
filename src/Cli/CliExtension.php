@@ -10,21 +10,14 @@
 namespace PhpTest\Cli;
 
 use PhpTest\ServiceContainer\AbstractExtension;
-use PhpTest\ServiceContainer\ContainerHelper;
-use PhpTest\ServiceContainer\ExtensionManager;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
 class CliExtension extends AbstractExtension
 {
     const ID_COMMAND = 'cli.command';
-
-    /**
-     * {@inheritdoc}
-     */
-    public function init(ExtensionManager $manager)
-    {
-    }
+    const ID_INPUT   = 'cli.input';
+    const ID_OUTPUT  = 'cli.output';
 
     /**
      * {@inheritdoc}
@@ -32,13 +25,7 @@ class CliExtension extends AbstractExtension
     public function load(ContainerBuilder $container)
     {
         $this->loadCommand($container);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function process(ContainerBuilder $container, ContainerHelper $helper)
-    {
+        $this->loadIo($container);
     }
 
     /**
@@ -48,5 +35,16 @@ class CliExtension extends AbstractExtension
     {
         $def = new Definition('PhpTest\Cli\RunCommand', [[]]);
         $container->setDefinition(self::ID_COMMAND, $def);
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     */
+    protected function loadIo(ContainerBuilder $container)
+    {
+        $in = new Definition('Symfony\Component\Console\Input\ArgvInput');
+        $out = new Definition('Symfony\Component\Console\Output\ConsoleOutput');
+        $container->setDefinition(self::ID_INPUT, $in);
+        $container->setDefinition(self::ID_OUTPUT, $out);
     }
 }

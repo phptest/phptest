@@ -9,19 +9,14 @@
  */
 namespace PhpTest\Cli;
 
-use PhpTest\Api\ApiExtension;
-use PhpTest\FileSystem\FileSystemExtension;
 use PhpTest\ServiceContainer\ContainerLoader;
 use PhpTest\ServiceContainer\ExtensionManager;
-use PhpTest\ServiceContainer\ServiceHelper;
 use Symfony\Component\Console;
-use Symfony\Component\Console\Command\HelpCommand;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class Application extends Console\Application
 {
@@ -56,6 +51,9 @@ class Application extends Console\Application
         $container = $this->buildContainer();
         $this->command = $container->get(CliExtension::ID_COMMAND);
         $this->add($this->command);
+
+        $input = $container->get(CliExtension::ID_INPUT);
+        $output = $container->get(CliExtension::ID_OUTPUT);
 
         parent::run($input, $output);
     }
