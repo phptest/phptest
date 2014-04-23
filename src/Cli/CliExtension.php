@@ -10,14 +10,17 @@
 namespace PhpTest\Cli;
 
 use PhpTest\ServiceContainer\AbstractExtension;
+use PhpTest\ServiceContainer\ContainerHelper;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
 class CliExtension extends AbstractExtension
 {
-    const ID_COMMAND = 'cli.command';
-    const ID_INPUT   = 'cli.input';
-    const ID_OUTPUT  = 'cli.output';
+    const ID_COMMAND     = 'cli.command';
+    const ID_CONTROLLER  = 'cli.controller';
+    const ID_INPUT       = 'cli.input';
+    const ID_OUTPUT      = 'cli.output';
+    const TAG_CONTROLLER = 'cli.controller';
 
     /**
      * {@inheritdoc}
@@ -26,6 +29,15 @@ class CliExtension extends AbstractExtension
     {
         $this->loadCommand($container);
         $this->loadIo($container);
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @param ContainerHelper $helper
+     */
+    public function process(ContainerBuilder $container, ContainerHelper $helper)
+    {
+        $this->processControllers($container, $helper);
     }
 
     /**
@@ -46,5 +58,15 @@ class CliExtension extends AbstractExtension
         $out = new Definition('Symfony\Component\Console\Output\ConsoleOutput');
         $container->setDefinition(self::ID_INPUT, $in);
         $container->setDefinition(self::ID_OUTPUT, $out);
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @param ContainerHelper $helper
+     */
+    protected function processControllers(ContainerBuilder $container, ContainerHelper $helper)
+    {
+        $refs = $helper->findAndSortTaggedServices($container, self::TAG_CONTROLLER);
+        $container->getDefinition(self::ID_COMMAND)->replaceArgument(0, $refs);
     }
 }
