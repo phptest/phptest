@@ -21,6 +21,17 @@ class CliExtension extends AbstractExtension
     const ID_OUTPUT      = 'cli.output';
     const TAG_CONTROLLER = 'cli.controller';
 
+    /** @var string */
+    protected $name;
+
+    /**
+     * @param string $name The command name
+     */
+    public function __construct($name)
+    {
+        $this->name = $name;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -44,7 +55,7 @@ class CliExtension extends AbstractExtension
      */
     protected function loadCommand(ContainerBuilder $container)
     {
-        $def = new Definition('PhpTest\Cli\Command', ['phptest', []]);
+        $def = new Definition('PhpTest\Cli\Command', [$this->name, []]);
         $container->setDefinition(self::ID_COMMAND, $def);
     }
 

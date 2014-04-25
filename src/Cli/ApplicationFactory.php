@@ -129,7 +129,7 @@ class ApplicationFactory
     protected function buildExtensions()
     {
         return [
-            new CliExtension(),
+            new CliExtension($this->getName()),
             new FileSystemExtension()
         ];
     }
