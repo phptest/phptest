@@ -32,4 +32,4 @@ The content of this library is released under the **MIT License** by
 [license]: /LICENSE
 [phptest]: https://github.com/phptest/phptest
 [phptest-sc]: https://github.com/phptest/service-container
-[symfony-di]: https://github.com/symfony/Console
+[symfony-console]: https://github.com/symfony/Console
