@@ -1,0 +1,38 @@
+{
+    "name": "phptest/cli",
+    "description": "Command line application factory",
+    "keywords": [
+        "app",
+        "application",
+        "builder",
+        "cli",
+        "command",
+        "console",
+        "factory",
+        "interface"
+    ],
+    "homepage": "https://phptest.github.io/components/cli",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Andrew Lawson",
+            "homepage": "http://adlawson.com"
+        },
+        {
+            "name": "Public contributors",
+            "homepage": "https://github.com/phptest/phptest/graphs/contributors"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "PhpTest\\Cli\\": ""
+        }
+    },
+    "require": {
+        "php": ">=5.4.0",
+        "phptest/service-container": "*@dev",
+        "symfony/console": "~2.4.0",
+        "symfony/dependency-injection": "~2.4.0"
+    }
+}
