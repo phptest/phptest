@@ -17,7 +17,6 @@ use Symfony\Component\DependencyInjection\Definition;
 class CliExtension extends AbstractExtension
 {
     const ID_COMMAND     = 'cli.command';
-    const ID_CONTROLLER  = 'cli.controller';
     const ID_INPUT       = 'cli.input';
     const ID_OUTPUT      = 'cli.output';
     const TAG_CONTROLLER = 'cli.controller';
@@ -28,7 +27,6 @@ class CliExtension extends AbstractExtension
     public function load(ContainerBuilder $container)
     {
         $this->loadCommand($container);
-        $this->loadController($container);
         $this->loadIo($container);
     }
 
@@ -48,16 +46,6 @@ class CliExtension extends AbstractExtension
     {
         $def = new Definition('PhpTest\Cli\Command', ['phptest', []]);
         $container->setDefinition(self::ID_COMMAND, $def);
-    }
-
-    /**
-     * @param ContainerBuilder $container
-     */
-    protected function loadController(ContainerBuilder $container)
-    {
-        $def = new Definition('PhpTest\Cli\CliController');
-        $def->addTag(self::TAG_CONTROLLER);
-        $container->setDefinition(self::ID_CONTROLLER, $def);
     }
 
     /**

@@ -24,7 +24,6 @@ class CliExtensionTest extends TestCase
 
         $definition = Mockery::type('Symfony\Component\DependencyInjection\Definition');
         $container->shouldReceive('setDefinition')->once()->with('cli.command', $definition);
-        $container->shouldReceive('setDefinition')->once()->with('cli.controller', $definition);
         $container->shouldReceive('setDefinition')->once()->with('cli.input', $definition);
         $container->shouldReceive('setDefinition')->once()->with('cli.output', $definition);
 
