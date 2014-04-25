@@ -23,9 +23,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ApplicationFactory
 {
-    /** @const string */
-    const NAME = 'phptest';
-
     /** @var array */
     protected $package;
 
@@ -88,7 +85,7 @@ class ApplicationFactory
      */
     public function getName()
     {
-        return self::NAME;
+        return 'phptest';
     }
 
     /**
