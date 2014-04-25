@@ -43,6 +43,7 @@
         "phpunit/phpunit": "~4.0.0"
     },
     "replace": {
+        "phptest/cli": "self.version",
         "phptest/service-container": "self.version"
     }
 }
