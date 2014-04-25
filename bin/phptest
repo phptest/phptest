@@ -1,6 +1,6 @@
 #!/usr/bin/env php
 <?php
-use PhpTest\Cli\Application;
+use PhpTest\Cli\ApplicationFactory;
 
 $autoload = array_filter([__DIR__ . '/../../../autoload.php', __DIR__ . '/../vendor/autoload.php'], 'is_file');
 $package = array_filter([__DIR__ . '/../phptest/phptest/composer.json', __DIR__ . '/../composer.json'], 'is_file');
@@ -17,5 +17,5 @@ if (!empty($autoload)) {
 }
 
 $packageJson = file_get_contents(reset($package));
-$application = new Application(json_decode($packageJson, true));
-$application->run();
+$application = new ApplicationFactory(json_decode($packageJson, true));
+$application->build()->run();

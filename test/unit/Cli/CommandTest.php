@@ -4,7 +4,7 @@ namespace PhpTest\Cli;
 use Mockery;
 use PHPUnit_Framework_TestCase as TestCase;
 
-class RunCommandTest extends TestCase
+class CommandTest extends TestCase
 {
     public function setUp()
     {
@@ -14,20 +14,27 @@ class RunCommandTest extends TestCase
         $this->controllers = [$a, $b, $c];
     }
 
+    public function testInterface()
+    {
+        $command = new Command('foo', []);
+
+        $this->assertInstanceOf('Symfony\Component\Console\Command\Command', $command);
+    }
+
     public function testGetName()
     {
-        $command = new RunCommand([]);
+        $command = new Command('foo', []);
 
-        $this->assertEquals('phptest', $command->getName());
+        $this->assertEquals('foo', $command->getName());
     }
 
     public function testConfigure()
     {
         foreach ($this->controllers as $controller) {
-            $controller->shouldReceive('configure')->once()->with(Mockery::type('PhpTest\Cli\RunCommand'));
+            $controller->shouldReceive('configure')->once()->with(Mockery::type('PhpTest\Cli\Command'));
         }
 
-        $command = new RunCommand($this->controllers);
+        $command = new Command('foo', $this->controllers);
     }
 
     public function testExecute()
@@ -40,11 +47,11 @@ class RunCommandTest extends TestCase
         $input->shouldReceive('validate')->once()->withNoArgs();
 
         foreach ($this->controllers as $controller) {
-            $controller->shouldReceive('configure')->once()->with(Mockery::type('PhpTest\Cli\RunCommand'));
+            $controller->shouldReceive('configure')->once()->with(Mockery::type('PhpTest\Cli\Command'));
             $controller->shouldReceive('execute')->once()->with($input, $output);
         }
 
-        $command = new RunCommand($this->controllers);
+        $command = new Command('foo', $this->controllers);
         $command->run($input, $output);
     }
 }

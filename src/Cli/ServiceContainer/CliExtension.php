@@ -46,7 +46,7 @@ class CliExtension extends AbstractExtension
      */
     protected function loadCommand(ContainerBuilder $container)
     {
-        $def = new Definition('PhpTest\Cli\RunCommand', [[]]);
+        $def = new Definition('PhpTest\Cli\Command', ['phptest', []]);
         $container->setDefinition(self::ID_COMMAND, $def);
     }
 
@@ -78,6 +78,6 @@ class CliExtension extends AbstractExtension
     protected function processControllers(ContainerBuilder $container, ContainerHelper $helper)
     {
         $refs = $helper->findAndSortTaggedServices($container, self::TAG_CONTROLLER);
-        $container->getDefinition(self::ID_COMMAND)->replaceArgument(0, $refs);
+        $container->getDefinition(self::ID_COMMAND)->replaceArgument(1, $refs);
     }
 }

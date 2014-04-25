@@ -40,7 +40,7 @@ class CliExtensionTest extends TestCase
 
         $helper->shouldReceive('findAndSortTaggedServices')->once()->with($container, 'cli.controller')->andReturn($references);
         $container->shouldReceive('getDefinition')->once()->with('cli.command')->andReturn($commandDefinition);
-        $commandDefinition->shouldReceive('replaceArgument')->once()->with(0, $references);
+        $commandDefinition->shouldReceive('replaceArgument')->once()->with(1, $references);
 
         $this->extension->process($container, $helper);
     }

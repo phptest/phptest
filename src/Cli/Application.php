@@ -9,32 +9,49 @@
  */
 namespace PhpTest\Cli;
 
-use PhpTest\Cli\ServiceContainer\CliExtension;
-use PhpTest\FileSystem\ServiceContainer\FileSystemExtension;
-use PhpTest\ServiceContainer\ContainerLoader;
-use PhpTest\ServiceContainer\ExtensionManager;
-use Symfony\Component\Console;
+use Symfony\Component\Console\Application as BaseApplication;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class Application extends Console\Application
+class Application extends BaseApplication
 {
-    const NAME = 'phptest';
-
-    /**
-     * @var Command
-     */
+    /** @var Command */
     protected $command;
 
+    /** @var InputDefinition */
+    protected $inputDefinition;
+
+    /** @var InputInterface */
+    protected $input;
+
+    /** @var OutputInterface */
+    protected $output;
+
     /**
-     * @param array $package
+     * @param string $name
+     * @param string $version
+     * @param InputDefinition $definition
+     * @param InputInterface $input
+     * @param OutputInterface $output
      */
-    public function __construct(array $package)
-    {
-        parent::__construct(self::NAME, $package['version']);
+    public function __construct(
+        $name,
+        $version,
+        InputDefinition $definition,
+        Command $command,
+        InputInterface $input,
+        OutputInterface $output
+    ) {
+        $this->command = $command;
+        $this->inputDefinition = $definition;
+        $this->input = $input;
+        $this->output = $output;
+
+        parent::__construct($name, $version);
     }
 
     /**
@@ -42,10 +59,7 @@ class Application extends Console\Application
      */
     public function getDefaultInputDefinition()
     {
-        return new InputDefinition([
-            new InputOption('--help', '-h', InputOption::VALUE_NONE, 'Display this help message.'),
-            new InputOption('--version', null, InputOption::VALUE_NONE, 'Display the current version.'),
-        ]);
+        return $this->inputDefinition;
     }
 
     /**
@@ -53,38 +67,9 @@ class Application extends Console\Application
      */
     public function run(InputInterface $input = null, OutputInterface $output = null)
     {
-        $container = $this->buildContainer();
-        $this->command = $container->get(CliExtension::ID_COMMAND);
         $this->add($this->command);
 
-        $input = $container->get(CliExtension::ID_INPUT);
-        $output = $container->get(CliExtension::ID_OUTPUT);
-
-        parent::run($input, $output);
-    }
-
-    /**
-     * @return ContainerInterface
-     */
-    protected function buildContainer()
-    {
-        $container = new ContainerBuilder();
-
-        $loader = new ContainerLoader($this->buildExtensionManager());
-        $loader->load($container)->compile();
-
-        return $container;
-    }
-
-    /**
-     * @return ExtensionManager
-     */
-    protected function buildExtensionManager()
-    {
-        return new ExtensionManager([
-            new CliExtension(),
-            new FileSystemExtension()
-        ]);
+        parent::run($input ?: $this->input, $output ?: $this->output);
     }
 
     /**

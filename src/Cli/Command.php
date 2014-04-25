@@ -9,29 +9,28 @@
  */
 namespace PhpTest\Cli;
 
-use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Command\Command as BaseCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class RunCommand extends Command
+class Command extends BaseCommand
 {
-    const NAME = Application::NAME;
-
     /**
      * @var ControllerInterface[]
      */
     protected $controllers = [];
 
     /**
+     * @param string $name
      * @param ControllerInterface[] $controllers
      */
-    public function __construct(array $controllers)
+    public function __construct($name, array $controllers)
     {
         foreach ($controllers as $controller) {
             $this->addController($controller);
         }
 
-        parent::__construct(Application::NAME);
+        parent::__construct($name);
     }
 
     /**
