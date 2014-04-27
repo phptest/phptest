@@ -26,7 +26,7 @@ class FileLocator
      */
     public function __construct($rootDir)
     {
-        $this->rootDir = realpath($rootDir) . DIRECTORY_SEPARATOR;
+        $this->rootDir = realpath($rootDir);
     }
 
     /**
@@ -52,7 +52,7 @@ class FileLocator
      */
     protected function getAbsolutePath($path)
     {
-        $rootPath = $this->rootDir . $path;
+        $rootPath = $this->rootDir . DIRECTORY_SEPARATOR . $path;
 
         if (is_file($path) || is_dir($path)) {
             $absolutePath = $path;
