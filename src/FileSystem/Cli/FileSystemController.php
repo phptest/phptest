@@ -10,6 +10,7 @@
 namespace PhpTest\FileSystem\Cli;
 
 use PhpTest\Cli\ControllerInterface;
+use PhpTest\FileSystem\FileLocator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,10 +18,23 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class FileSystemController implements ControllerInterface
 {
-    const ARG_FILE = 'file';
+    const ARG_FILE = 'path';
 
     /**
-     * @param Command $command
+     * @var FileLocator
+     */
+    protected $locator;
+
+    /**
+     * @param FileLocator $locator
+     */
+    public function __construct(FileLocator $locator)
+    {
+        $this->locator = $locator;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function configure(Command $command)
     {
@@ -28,11 +42,15 @@ class FileSystemController implements ControllerInterface
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * {@inheritdoc}
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('File: ' . $input->getArgument(self::ARG_FILE));
+        $path = $input->getArgument(self::ARG_FILE);
+
+        if ($path) {
+            $output->writeln('File: ' . $path);
+            var_dump($this->locator->findFiles($path));
+        }
     }
 }

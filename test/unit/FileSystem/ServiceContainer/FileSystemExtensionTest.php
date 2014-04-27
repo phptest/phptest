@@ -3,6 +3,7 @@ namespace PhpTest\FileSystem\ServiceContainer;
 
 use Mockery;
 use PHPUnit_Framework_TestCase as TestCase;
+use Symfony\Component\DependencyInjection\Definition;
 
 class FileSystemExtensionTest extends TestCase
 {
@@ -22,8 +23,18 @@ class FileSystemExtensionTest extends TestCase
     {
         $container = Mockery::mock('Symfony\Component\DependencyInjection\ContainerBuilder');
 
-        $definition = Mockery::type('Symfony\Component\DependencyInjection\Definition');
-        $container->shouldReceive('setDefinition')->once()->with('fs.controller', $definition);
+        $container->shouldReceive('setDefinition')->once()->with('fs.controller', Mockery::on(function (Definition $def) {
+            $arguments = $def->getArguments();
+            $firstArg = reset($arguments);
+            $locatorRef = (string) $firstArg === 'fs.locator';
+            $className = $def->getClass() === 'PhpTest\FileSystem\Cli\FileSystemController';
+
+            return $className && $locatorRef;
+        }));
+
+        $container->shouldReceive('setDefinition')->once()->with('fs.locator', Mockery::on(function (Definition $def) {
+            return $def->getClass() === 'PhpTest\FileSystem\FileLocator';
+        }));
 
         $this->extension->load($container);
     }

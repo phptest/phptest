@@ -13,10 +13,12 @@ use PhpTest\Cli\ServiceContainer\CliExtension;
 use PhpTest\ServiceContainer\AbstractExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 
 class FileSystemExtension extends AbstractExtension
 {
     const ID_CONTROLLER = 'fs.controller';
+    const ID_LOCATOR = 'fs.locator';
 
     /**
      * {@inheritdoc}
@@ -24,6 +26,7 @@ class FileSystemExtension extends AbstractExtension
     public function load(ContainerBuilder $container)
     {
         $this->loadController($container);
+        $this->loadFileLocator($container);
     }
 
     /**
@@ -31,8 +34,20 @@ class FileSystemExtension extends AbstractExtension
      */
     protected function loadController(ContainerBuilder $container)
     {
-        $def = new Definition('PhpTest\FileSystem\Cli\FileSystemController');
+        $locator = new Reference(self::ID_LOCATOR);
+
+        $def = new Definition('PhpTest\FileSystem\Cli\FileSystemController', [$locator]);
         $def->addTag(CliExtension::TAG_CONTROLLER);
+
         $container->setDefinition(self::ID_CONTROLLER, $def);
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     */
+    protected function loadFileLocator(ContainerBuilder $container)
+    {
+        $def = new Definition('PhpTest\FileSystem\FileLocator', [getcwd()]);
+        $container->setDefinition(self::ID_LOCATOR, $def);
     }
 }
