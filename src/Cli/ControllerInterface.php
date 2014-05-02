@@ -9,16 +9,16 @@
  */
 namespace PhpTest\Cli;
 
-use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Command\Command as CommandInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 interface ControllerInterface
 {
     /**
-     * @param Command $command
+     * @param CommandInterface $command
      */
-    public function configure(Command $command);
+    public function configure(CommandInterface $command);
 
     /**
      * @param InputInterface $input
