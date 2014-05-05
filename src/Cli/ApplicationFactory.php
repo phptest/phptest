@@ -75,8 +75,8 @@ class ApplicationFactory
     public function getInputDefinition()
     {
         return new InputDefinition([
-            new InputOption('--help', '-h', InputOption::VALUE_NONE, 'Display this help message.'),
-            new InputOption('--version', null, InputOption::VALUE_NONE, 'Display the current version.'),
+            new InputOption('help', 'h', InputOption::VALUE_NONE, 'Display this help message.'),
+            new InputOption('version', null, InputOption::VALUE_NONE, 'Display the current version.'),
         ]);
     }
 
