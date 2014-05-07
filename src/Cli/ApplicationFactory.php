@@ -112,7 +112,7 @@ class ApplicationFactory
     {
         $container = new ContainerBuilder();
 
-        $loader = new ContainerLoader(new ExtensionManager($this->buildExtensions()));
+        $loader = new ContainerLoader($this->buildExtensionManager());
         $loader->load($container);
 
         $container->compile();
@@ -121,13 +121,13 @@ class ApplicationFactory
     }
 
     /**
-     * @return ExtensionInterface[]
+     * @return ExtensionManager
      */
-    protected function buildExtensions()
+    protected function buildExtensionManager()
     {
-        return [
+        return new ExtensionManager([
             new CliExtension($this->getName()),
             new FileSystemExtension()
-        ];
+        ]);
     }
 }
