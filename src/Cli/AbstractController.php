@@ -9,14 +9,14 @@
  */
 namespace PhpTest\Cli;
 
-use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Command\Command as CommandInterface;
 
 abstract class AbstractController implements ControllerInterface
 {
     /**
-     * @param Command $command
+     * @param CommandInterface $command
      */
-    public function configure(Command $command)
+    public function configure(CommandInterface $command)
     {
     }
 }
