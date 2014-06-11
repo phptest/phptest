@@ -32,7 +32,7 @@
     "require": {
         "php": ">=5.4.0",
         "phptest/service-container": "*@dev",
-        "symfony/console": "~2.4.0",
-        "symfony/dependency-injection": "~2.4.0"
+        "symfony/console": "~2.5",
+        "symfony/dependency-injection": "~2.5"
     }
 }
