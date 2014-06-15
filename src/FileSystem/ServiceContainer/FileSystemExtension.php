@@ -10,6 +10,7 @@
 namespace PhpTest\FileSystem\ServiceContainer;
 
 use PhpTest\Cli\ServiceContainer\CliExtension;
+use PhpTest\Loader\ServiceContainer\LoaderExtension;
 use PhpTest\ServiceContainer\AbstractExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -27,8 +28,8 @@ class FileSystemExtension extends AbstractExtension
 
     protected function loadController(ContainerBuilder $container)
     {
-        $def = $container-register(self::ID_CONTROLLER, 'PhpTest\FileSystem\Cli\FileSystemController');
-        $def->setArguments([new Reference(self::ID_LOCATOR)]);
+        $def = $container->register(self::ID_CONTROLLER, 'PhpTest\FileSystem\Cli\FileSystemController');
+        $def->setArguments([new Reference(self::ID_LOCATOR), new Reference(LoaderExtension::ID_COLLECTION)]);
         $def->addTag(CliExtension::TAG_CONTROLLER);
     }
 

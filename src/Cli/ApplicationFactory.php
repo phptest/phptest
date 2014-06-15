@@ -11,6 +11,7 @@ namespace PhpTest\Cli;
 
 use PhpTest\Cli\ServiceContainer\CliExtension;
 use PhpTest\FileSystem\ServiceContainer\FileSystemExtension;
+use PhpTest\Loader\ServiceContainer\LoaderExtension;
 use PhpTest\ServiceContainer\ContainerLoader;
 use PhpTest\ServiceContainer\ExtensionManager;
 use Symfony\Component\Console\Command\Command;
@@ -127,7 +128,8 @@ class ApplicationFactory
     {
         return new ExtensionManager([
             new CliExtension($this->getName()),
-            new FileSystemExtension()
+            new FileSystemExtension(),
+            new LoaderExtension()
         ]);
     }
 }

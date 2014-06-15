@@ -33,17 +33,12 @@ class FileLocator
      * @param string $path
      * @return SplFileInfo[]
      */
-    public function findFiles($path)
+    public function getFiles($path)
     {
-        $iterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator(
-                $this->getAbsolutePath($path),
-                RecursiveDirectoryIterator::SKIP_DOTS |
-                RecursiveDirectoryIterator::FOLLOW_SYMLINKS
-            )
+        return iterator_to_array(
+            $this->getFileIterator($this->getAbsolutePath($path)),
+            false
         );
-
-        return iterator_to_array($iterator, false);
     }
 
     /**
@@ -63,5 +58,20 @@ class FileLocator
         }
 
         return $absolutePath;
+    }
+
+    /**
+     * @param string $path
+     * @return Iterator
+     */
+    protected function getFileIterator($path)
+    {
+        return new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator(
+                $path,
+                RecursiveDirectoryIterator::SKIP_DOTS |
+                RecursiveDirectoryIterator::FOLLOW_SYMLINKS
+            )
+        );
     }
 }

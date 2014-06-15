@@ -11,14 +11,14 @@ class FileNotFoundExceptionTest extends TestCase
     {
         $exception = new FileNotFoundException('');
 
-        $this->assertInterface('PhpTest\Exception\ExceptionInterface', $exception);
+        $this->assertInstanceOf('PhpTest\Exception\ExceptionInterface', $exception);
     }
 
     public function testParent()
     {
         $exception = new FileNotFoundException('');
 
-        $this->assertInterface('RuntimeException', $exception);
+        $this->assertInstanceOf('RuntimeException', $exception);
     }
 
     public function testGetCode()
