@@ -29,6 +29,22 @@ class ContainerHelperTest extends TestCase
         ];
     }
 
+    public function dataFindNamedTaggedServices()
+    {
+        return [
+            [
+                'foo',
+                ['foo' => [[]], 'bar' => [['name' => 'bar_name']], 'baz' => [['name' => 'baz_name']], 'bam' => [['name' => 'bam_name']]],
+                ['bar_name' => 'bar', 'baz_name' => 'baz', 'bam_name' => 'bam']
+            ],
+            [
+                'bar',
+                ['foo' => [['name' => 'foo_name'], ['name' => 'other_foo_name']]],
+                ['foo_name' => 'foo', 'other_foo_name' => 'foo']
+            ]
+        ];
+    }
+
     /**
      * @dataProvider dataFindAndSortTaggedServices
      */
@@ -40,5 +56,29 @@ class ContainerHelperTest extends TestCase
         $ids = array_map(function ($r) { return (string) $r; }, $ref);
 
         $this->assertEquals($expected, $ids);
+    }
+
+    /**
+     * @dataProvider dataFindNamedTaggedServices
+     */
+    public function testFindNamedTaggedServices($tag, $services, $expected)
+    {
+        $this->container->shouldReceive('findTaggedServiceIds')->once()->with($tag)->andReturn($services);
+
+        $ref = $this->helper->findNamedTaggedServices($this->container, $tag);
+        $ids = array_map(function ($r) { return (string) $r; }, $ref);
+
+        $this->assertEquals($expected, $ids);
+    }
+
+    /**
+     * @expectedException PhpTest\ServiceContainer\Exception\ConflictingTagNameException
+     */
+    public function testFindNamedTaggedServicesThrowsWithNameConflicts()
+    {
+        $services = ['foo' => [['name' => 'foo_name']], 'bar' => [['name' => 'foo_name']]];
+        $this->container->shouldReceive('findTaggedServiceIds')->once()->with('foo')->andReturn($services);
+
+        $this->helper->findNamedTaggedServices($this->container, 'foo');
     }
 }

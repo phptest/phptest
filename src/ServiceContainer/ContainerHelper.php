@@ -9,6 +9,7 @@
  */
 namespace PhpTest\ServiceContainer;
 
+use PhpTest\ServiceContainer\Exception\ConflictingTagNameException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
@@ -49,5 +50,32 @@ class ContainerHelper
         return array_map(function ($tag) {
             return new Reference($tag['id']);
         }, array_values($services));
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @param string $tag
+     * @param string $key
+     * @return Reference[]
+     */
+    public function findNamedTaggedServices(ContainerBuilder $container, $tag, $key = 'name')
+    {
+        $services = [];
+
+        foreach ($container->findTaggedServiceIds($tag) as $id => $tags) {
+            $reference = new Reference($id);
+
+            foreach ($tags as $tag) {
+                if (isset($tag[$key])) {
+                    if (isset($services[$tag[$key]])) {
+                        throw new ConflictingTagNameException($tag[$key]);
+                    }
+
+                    $services[$tag[$key]] = $reference;
+                }
+            }
+        }
+
+        return $services;
     }
 }
