@@ -41,7 +41,7 @@ class CliExtension extends AbstractExtension
     protected function loadCommand(ContainerBuilder $container)
     {
         $def = $container->register(self::ID_COMMAND, 'PhpTest\Cli\Command');
-        $def->setArguents([$this->name, []]);
+        $def->setArguments([$this->name, []]);
     }
 
     protected function loadIo(ContainerBuilder $container)

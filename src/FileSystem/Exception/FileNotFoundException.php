@@ -10,8 +10,10 @@
 namespace PhpTest\FileSystem\Exception;
 
 use Exception;
+use PhpTest\Exception\ExceptionInterface;
+use RuntimeException;
 
-class FileNotFoundException extends \RuntimeException
+class FileNotFoundException extends RuntimeException implements ExceptionInterface
 {
     /**
      * @param string $path
@@ -20,6 +22,8 @@ class FileNotFoundException extends \RuntimeException
      */
     public function __construct($path, $code = null, Exception $previous = null)
     {
-        parent::__construct(sprintf('No file found at path "%s".', $path), $code, $previous);
+        $message = sprintf('No file found at path "%s".', $path);
+
+        parent::__construct($message, $code, $previous);
     }
 }
