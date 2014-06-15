@@ -12,7 +12,6 @@ namespace PhpTest\Cli\ServiceContainer;
 use PhpTest\ServiceContainer\AbstractExtension;
 use PhpTest\ServiceContainer\ContainerHelper;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
 
 class CliExtension extends AbstractExtension
 {
@@ -21,59 +20,36 @@ class CliExtension extends AbstractExtension
     const ID_OUTPUT      = 'cli.output';
     const TAG_CONTROLLER = 'cli.controller';
 
-    /** @var string */
     protected $name;
 
-    /**
-     * @param string $name The command name
-     */
     public function __construct($name)
     {
         $this->name = $name;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function load(ContainerBuilder $container)
     {
         $this->loadCommand($container);
         $this->loadIo($container);
     }
 
-    /**
-     * @param ContainerBuilder $container
-     * @param ContainerHelper $helper
-     */
     public function process(ContainerBuilder $container, ContainerHelper $helper)
     {
         $this->processControllers($container, $helper);
     }
 
-    /**
-     * @param ContainerBuilder $container
-     */
     protected function loadCommand(ContainerBuilder $container)
     {
-        $def = new Definition('PhpTest\Cli\Command', [$this->name, []]);
-        $container->setDefinition(self::ID_COMMAND, $def);
+        $def = $container->register(self::ID_COMMAND, 'PhpTest\Cli\Command');
+        $def->setArguents([$this->name, []]);
     }
 
-    /**
-     * @param ContainerBuilder $container
-     */
     protected function loadIo(ContainerBuilder $container)
     {
-        $in = new Definition('Symfony\Component\Console\Input\ArgvInput');
-        $out = new Definition('Symfony\Component\Console\Output\ConsoleOutput');
-        $container->setDefinition(self::ID_INPUT, $in);
-        $container->setDefinition(self::ID_OUTPUT, $out);
+        $container->register(self::ID_INPUT, 'Symfony\Component\Console\Input\ArgvInput');
+        $container->register(self::ID_OUTPUT, 'Symfony\Component\Console\Output\ConsoleOutput');
     }
 
-    /**
-     * @param ContainerBuilder $container
-     * @param ContainerHelper $helper
-     */
     protected function processControllers(ContainerBuilder $container, ContainerHelper $helper)
     {
         $refs = $helper->findAndSortTaggedServices($container, self::TAG_CONTROLLER);
