@@ -2,7 +2,6 @@
 namespace PhpTest\FileSystem\Exception;
 
 use Exception;
-use Mockery;
 use PHPUnit_Framework_TestCase as TestCase;
 
 class FileNotFoundExceptionTest extends TestCase
@@ -41,5 +40,12 @@ class FileNotFoundExceptionTest extends TestCase
         $exception = new FileNotFoundException('foo', 100, $previous);
 
         $this->assertSame($previous, $exception->getPrevious());
+    }
+
+    public function testGetPath()
+    {
+        $exception = new FileNotFoundException('foo');
+
+        $this->assertEquals('foo', $exception->getPath());
     }
 }

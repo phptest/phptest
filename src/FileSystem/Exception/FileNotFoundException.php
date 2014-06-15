@@ -16,14 +16,28 @@ use RuntimeException;
 class FileNotFoundException extends RuntimeException implements ExceptionInterface
 {
     /**
+     * @var string
+     */
+    protected $path;
+
+    /**
      * @param string $path
      * @param integer $code
      * @param Exception $previous
      */
     public function __construct($path, $code = null, Exception $previous = null)
     {
+        $this->path = $path;
         $message = sprintf('No file found at path "%s".', $path);
 
         parent::__construct($message, $code, $previous);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
     }
 }
