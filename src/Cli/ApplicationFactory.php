@@ -9,6 +9,7 @@
  */
 namespace PhpTest\Cli;
 
+use PhpTest\Api\ServiceContainer\ApiExtension;
 use PhpTest\Cli\ServiceContainer\CliExtension;
 use PhpTest\FileSystem\ServiceContainer\FileSystemExtension;
 use PhpTest\Loader\ServiceContainer\LoaderExtension;
@@ -131,6 +132,7 @@ class ApplicationFactory
             new CliExtension($this->getName()),
             new FileSystemExtension(),
             new LoaderExtension(),
+            new ApiExtension(),
             new ResultExtension()
         ]);
     }

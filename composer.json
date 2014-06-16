@@ -27,6 +27,9 @@
         "bin/phptest"
     ],
     "autoload": {
+        "files": [
+            "src/Api/Functional/inc/fn.php"
+        ],
         "psr-4": {
             "PhpTest\\": "src/"
         }
