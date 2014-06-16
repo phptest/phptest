@@ -16,18 +16,18 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class ResultExtension extends AbstractExtension
 {
-    const ID_FORMATTER_CHECK = 'result.formatter.check';
+    const ID_FORMATTER_DOT = 'result.formatter.dot';
     const ID_HANDLER = 'result.handler';
 
     public function load(ContainerBuilder $container)
     {
-        $this->loadCheckFormatter($container);
+        $this->loadDotFormatter($container);
         $this->loadHandler($container);
     }
 
-    protected function loadCheckFormatter(ContainerBuilder $container)
+    protected function loadDotFormatter(ContainerBuilder $container)
     {
-        $container->register(self::ID_FORMATTER_CHECK, 'PhpTest\Result\Formatter\CheckFormatter');
+        $container->register(self::ID_FORMATTER_DOT, 'PhpTest\Result\Formatter\DotFormatter');
     }
 
     protected function loadHandler(ContainerBuilder $container)
@@ -35,7 +35,7 @@ class ResultExtension extends AbstractExtension
         $def = $container->register(self::ID_HANDLER, 'PhpTest\Result\Handler\ConsoleOutputHandler');
         $def->setArguments([
             new Reference(CliExtension::ID_OUTPUT),
-            new Reference(self::ID_FORMATTER_CHECK)
+            new Reference(self::ID_FORMATTER_DOT)
         ]);
     }
 }

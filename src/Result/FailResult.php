@@ -9,14 +9,15 @@
  */
 namespace PhpTest\Result;
 
+use Exception;
 use PhpTest\TestInterface;
 
-class SuccessfulResult implements ResultInterface
+class FailResult implements ResultInterface
 {
     /**
-     * @var mixed
+     * @var Exception
      */
-    protected $result;
+    protected $exception;
 
     /**
      * @var TestInterface
@@ -24,21 +25,21 @@ class SuccessfulResult implements ResultInterface
     protected $test;
 
     /**
-     * @param mixed $result
+     * @param Exception $exception
      * @param TestInterface $test
      */
-    public function __construct($result, TestInterface $test)
+    public function __construct(Exception $exception, TestInterface $test)
     {
-        $this->result = $result;
+        $this->exception = $exception;
         $this->test = $test;
     }
 
     /**
-     * @return mixed
+     * @return Exception
      */
-    public function getResult()
+    public function getException()
     {
-        return $this->result;
+        return $this->exception;
     }
 
     /**

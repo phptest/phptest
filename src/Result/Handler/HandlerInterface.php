@@ -9,19 +9,18 @@
  */
 namespace PhpTest\Result\Handler;
 
-use Exception;
-use PhpTest\Result\FailedResult;
-use PhpTest\Result\SuccessfulResult;
+use PhpTest\Result\FailResult;
+use PhpTest\Result\PassResult;
 
 interface HandlerInterface
 {
     /**
-     * @param FailedResult
+     * @param FailResult
      */
-    public function handleFailure(FailedResult $result);
+    public function handleFail(FailResult $result);
 
     /**
-     * @param SuccessfulResult
+     * @param PassResult
      */
-    public function handleSuccess(SuccessfulResult $result);
+    public function handlePass(PassResult $result);
 }

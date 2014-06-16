@@ -9,10 +9,9 @@
  */
 namespace PhpTest\Result\Handler;
 
-use Exception;
-use PhpTest\Result\FailedResult;
+use PhpTest\Result\FailResult;
 use PhpTest\Result\Formatter\FormatterInterface;
-use PhpTest\Result\SuccessfulResult;
+use PhpTest\Result\PassResult;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 
 class ConsoleOutputHandler implements HandlerInterface
@@ -38,18 +37,18 @@ class ConsoleOutputHandler implements HandlerInterface
     }
 
     /**
-     * @param FailedResult $result
+     * @param FailResult $result
      */
-    public function handleFailure(FailedResult $result)
+    public function handleFail(FailResult $result)
     {
-        $this->output->write('<error>%s</error>', $this->formatter->formatFailure($result));
+        $this->output->write(sprintf('<fg=red>%s</fg=red>', $this->formatter->formatFail($result)));
     }
 
     /**
-     * @param SuccessfulResult $result
+     * @param PassResult $result
      */
-    public function handleSuccess(SuccessfulResult $result)
+    public function handlePass(PassResult $result)
     {
-        $this->output->write('<success>%s</success>', $this->formatter->formatSuccess($result));
+        $this->output->write(sprintf('<fg=green>%s</fg=green>', $this->formatter->formatPass($result)));
     }
 }

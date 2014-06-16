@@ -39,7 +39,7 @@ class TestTest extends TestCase
         $test = new Test('', $fn, ['foo', 'bar']);
 
         $handler = Mockery::mock('PhpTest\Result\Handler\HandlerInterface');
-        $handler->shouldReceive('handleSuccess')->once()->with(Mockery::type('PhpTest\Result\ResultInterface'));
+        $handler->shouldReceive('handlePass')->once()->with(Mockery::type('PhpTest\Result\ResultInterface'));
 
         $test->execute($handler);
     }
@@ -49,7 +49,7 @@ class TestTest extends TestCase
         $test = new Test('', function(){});
 
         $handler = Mockery::mock('PhpTest\Result\Handler\HandlerInterface');
-        $handler->shouldReceive('handleSuccess')->once()->with(Mockery::type('PhpTest\Result\SuccessfulResult'));
+        $handler->shouldReceive('handlePass')->once()->with(Mockery::type('PhpTest\Result\PassResult'));
 
         $test->execute($handler);
     }
@@ -61,7 +61,7 @@ class TestTest extends TestCase
         });
 
         $handler = Mockery::mock('PhpTest\Result\Handler\HandlerInterface');
-        $handler->shouldReceive('handleFailure')->once()->with(Mockery::type('PhpTest\Result\FailedResult'));
+        $handler->shouldReceive('handleFail')->once()->with(Mockery::type('PhpTest\Result\FailResult'));
 
         $test->execute($handler);
     }

@@ -13,15 +13,21 @@ use Exception;
 use PhpTest\Result\FailResult;
 use PhpTest\Result\PassResult;
 
-interface FormatterInterface
+class DotFormatter implements FormatterInterface
 {
     /**
      * @param FailResult $result
      */
-    public function formatFail(FailResult $result);
+    public function formatFail(FailResult $result)
+    {
+        return 'F';
+    }
 
     /**
      * @param PassResult $result
      */
-    public function formatPass(PassResult $result);
+    public function formatPass(PassResult $result)
+    {
+        return '.';
+    }
 }

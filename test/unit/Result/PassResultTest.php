@@ -4,7 +4,7 @@ namespace PhpTest\Result;
 use Mockery;
 use PHPUnit_Framework_TestCase as TestCase;
 
-class SucessfulResultTest extends TestCase
+class PassResultTest extends TestCase
 {
     public function setUp()
     {
@@ -13,21 +13,21 @@ class SucessfulResultTest extends TestCase
 
     public function testInterface()
     {
-        $result = new SuccessfulResult('', $this->test);
+        $result = new PassResult('', $this->test);
 
         $this->assertInstanceOf('PhpTest\Result\ResultInterface', $result);
     }
 
     public function testGetResult()
     {
-        $result = new SuccessfulResult('foo', $this->test);
+        $result = new PassResult('foo', $this->test);
 
         $this->assertEquals('foo', $result->getResult());
     }
 
     public function testGetTest()
     {
-        $result = new SuccessfulResult('foo', $this->test);
+        $result = new PassResult('foo', $this->test);
 
         $this->assertSame($this->test, $result->getTest());
     }

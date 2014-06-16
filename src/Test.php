@@ -10,9 +10,9 @@
 namespace PhpTest;
 
 use Exception;
-use PhpTest\Result\FailedResult;
+use PhpTest\Result\FailResult;
 use PhpTest\Result\Handler\HandlerInterface;
-use PhpTest\Result\SuccessfulResult;
+use PhpTest\Result\PassResult;
 
 class Test implements TestInterface, ArgumentBoundInterface
 {
@@ -50,9 +50,9 @@ class Test implements TestInterface, ArgumentBoundInterface
     {
         try {
             $result = call_user_func_array($this->fn, $this->arguments);
-            $handler->handleSuccess(new SuccessfulResult($result, $this));
+            $handler->handlePass(new PassResult($result, $this));
         } catch (Exception $exception) {
-            $handler->handleFailure(new FailedResult($exception, $this));
+            $handler->handleFail(new FailResult($exception, $this));
         }
     }
 
