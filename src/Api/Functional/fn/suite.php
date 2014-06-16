@@ -9,6 +9,7 @@
  */
 namespace PhpTest\Api\Functional\fn;
 
+use Closure;
 use PhpTest\Api\Functional\SuiteRegistry;
 use PhpTest\Suite;
 use PhpTest\SuiteInterface;
@@ -23,12 +24,13 @@ function suite($name, callable $fn) {
 
     _suite($parent, $name, function (SuiteInterface $suite) use ($fn, $registry) {
         $previous = $registry->setCurrentSuite($suite);
-        call_user_func($fn, $suite);
+        $fn instanceof Closure ? $fn($suite) : call_user_func($fn, $suite);
         $registry->setCurrentSuite($previous);
     });
 };
 
 /**
+ * @param SuiteInterface $suite
  * @param string $name
  * @param callable $fn
  */
@@ -36,5 +38,5 @@ function _suite(SuiteInterface $parent, $name, callable $fn) {
     $suite = new Suite($name);
     $parent->add($suite);
 
-    call_user_func($fn, $suite);
+    $fn instanceof Closure ? $fn($suite) : call_user_func($fn, $suite);
 };
