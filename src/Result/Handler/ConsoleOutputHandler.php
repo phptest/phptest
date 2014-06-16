@@ -41,7 +41,7 @@ class ConsoleOutputHandler implements HandlerInterface
      */
     public function handleFail(FailResult $result)
     {
-        $this->output->write(sprintf('<fg=red>%s</fg=red>', $this->formatter->formatFail($result)));
+        $this->output->write(sprintf('<fail>%s</fail>', $this->formatter->formatFail($result)));
     }
 
     /**
@@ -49,6 +49,6 @@ class ConsoleOutputHandler implements HandlerInterface
      */
     public function handlePass(PassResult $result)
     {
-        $this->output->write(sprintf('<fg=green>%s</fg=green>', $this->formatter->formatPass($result)));
+        $this->output->write(sprintf('<pass>%s</pass>', $this->formatter->formatPass($result)));
     }
 }

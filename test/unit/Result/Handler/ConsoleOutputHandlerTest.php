@@ -24,7 +24,7 @@ class ConsoleOutputHandlerTest extends TestCase
         $result = Mockery::mock('PhpTest\Result\FailResult');
 
         $this->formatter->shouldReceive('formatFail')->once()->with($result)->andReturn('foo');
-        $this->output->shouldReceive('write')->once()->with('<fg=red>foo</fg=red>');
+        $this->output->shouldReceive('write')->once()->with('<fail>foo</fail>');
 
         $this->handler->handleFail($result);
     }
@@ -34,7 +34,7 @@ class ConsoleOutputHandlerTest extends TestCase
         $result = Mockery::mock('PhpTest\Result\PassResult');
 
         $this->formatter->shouldReceive('formatPass')->once()->with($result)->andReturn('foo');
-        $this->output->shouldReceive('write')->once()->with('<fg=green>foo</fg=green>');
+        $this->output->shouldReceive('write')->once()->with('<pass>foo</pass>');
 
         $this->handler->handlePass($result);
     }

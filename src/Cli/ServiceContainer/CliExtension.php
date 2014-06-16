@@ -12,12 +12,16 @@ namespace PhpTest\Cli\ServiceContainer;
 use PhpTest\ServiceContainer\AbstractExtension;
 use PhpTest\ServiceContainer\ContainerHelper;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 
 class CliExtension extends AbstractExtension
 {
     const ID_COMMAND     = 'cli.command';
     const ID_INPUT       = 'cli.input';
     const ID_OUTPUT      = 'cli.output';
+    const ID_OUTPUT_FORMATTER = 'cli.output.formatter';
+    const ID_OUTPUT_FORMATTER_FAIL = 'cli.output.formatter.fail';
+    const ID_OUTPUT_FORMATTER_PASS = 'cli.output.formatter.pass';
     const TAG_CONTROLLER = 'cli.controller';
 
     protected $name;
@@ -30,7 +34,9 @@ class CliExtension extends AbstractExtension
     public function load(ContainerBuilder $container)
     {
         $this->loadCommand($container);
-        $this->loadIo($container);
+        $this->loadInput($container);
+        $this->loadOutput($container);
+        $this->loadOutputFormatter($container);
     }
 
     public function process(ContainerBuilder $container, ContainerHelper $helper)
@@ -44,10 +50,31 @@ class CliExtension extends AbstractExtension
         $def->setArguments([$this->name, []]);
     }
 
-    protected function loadIo(ContainerBuilder $container)
+    protected function loadInput(ContainerBuilder $container)
     {
         $container->register(self::ID_INPUT, 'Symfony\Component\Console\Input\ArgvInput');
-        $container->register(self::ID_OUTPUT, 'Symfony\Component\Console\Output\ConsoleOutput');
+    }
+
+    protected function loadOutput(ContainerBuilder $container)
+    {
+        $def = $container->register(self::ID_OUTPUT, 'Symfony\Component\Console\Output\ConsoleOutput');
+        $def->addMethodCall('setFormatter', [new Reference(self::ID_OUTPUT_FORMATTER)]);
+    }
+
+    protected function loadOutputFormatter(ContainerBuilder $container)
+    {
+        $def = $container->register(self::ID_OUTPUT_FORMATTER, 'Symfony\Component\Console\Formatter\OutputFormatter');
+        $def->setPublic(false);
+        $def->setArguments([true, [
+            'fail' => new Reference(self::ID_OUTPUT_FORMATTER_FAIL),
+            'pass' => new Reference(self::ID_OUTPUT_FORMATTER_PASS)
+        ]]);
+
+        $def = $container->register(self::ID_OUTPUT_FORMATTER_FAIL, 'Symfony\Component\Console\Formatter\OutputFormatterStyle');
+        $def->setArguments(['red', null, ['bold']]);
+
+        $def = $container->register(self::ID_OUTPUT_FORMATTER_PASS, 'Symfony\Component\Console\Formatter\OutputFormatterStyle');
+        $def->setArguments(['green', null, ['bold']]);
     }
 
     protected function processControllers(ContainerBuilder $container, ContainerHelper $helper)
