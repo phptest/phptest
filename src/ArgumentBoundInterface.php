@@ -9,8 +9,6 @@
  */
 namespace PhpTest;
 
-use PhpTest\Result\HandlerInterface;
-
 interface ArgumentBoundInterface
 {
     /**

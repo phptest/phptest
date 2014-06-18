@@ -9,8 +9,6 @@
  */
 namespace PhpTest;
 
-use IteratorAggregate;
-
 interface SuiteInterface extends TestInterface
 {
     /**

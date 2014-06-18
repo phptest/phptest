@@ -14,6 +14,7 @@ use PhpTest\Cli\ServiceContainer\CliExtension;
 use PhpTest\FileSystem\ServiceContainer\FileSystemExtension;
 use PhpTest\Loader\ServiceContainer\LoaderExtension;
 use PhpTest\Result\ServiceContainer\ResultExtension;
+use PhpTest\Suite\ServiceContainer\SuiteExtension;
 use PhpTest\ServiceContainer\ContainerLoader;
 use PhpTest\ServiceContainer\ExtensionManager;
 use Symfony\Component\Console\Command\Command;
@@ -133,7 +134,8 @@ class ApplicationFactory
             new FileSystemExtension(),
             new LoaderExtension(),
             new ApiExtension(),
-            new ResultExtension()
+            new ResultExtension(),
+            new SuiteExtension()
         ]);
     }
 }
