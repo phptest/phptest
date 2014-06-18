@@ -11,8 +11,7 @@ namespace PhpTest\Api\Functional;
 
 use PhpTest\Api\ApiInterface;
 use PhpTest\Loader\LoaderCollection;
-use PhpTest\Result\Handler\HandlerInterface;
-use PhpTest\Suite;
+use PhpTest\SuiteInterface;
 
 class FunctionalApi implements ApiInterface
 {
@@ -36,25 +35,14 @@ class FunctionalApi implements ApiInterface
 
     /**
      * @param LoaderCollection $loaders
-     * @param HandlerInterface $handler
+     * @param SuiteInterface $suite
      */
-    public function execute(LoaderCollection $loaders, HandlerInterface $handler)
+    public function load(LoaderCollection $loaders, SuiteInterface $suite)
     {
-        $suite = $this->buildSuite();
         $this->registry->setCurrentSuite($suite);
 
         foreach ($loaders as $loader) {
             $loader->load();
         }
-
-        $suite->execute($handler);
-    }
-
-    /**
-     * @return Suite
-     */
-    protected function buildSuite()
-    {
-        return new Suite(__CLASS__);
     }
 }

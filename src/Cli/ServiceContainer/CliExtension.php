@@ -71,10 +71,10 @@ class CliExtension extends AbstractExtension
         ]]);
 
         $def = $container->register(self::ID_OUTPUT_FORMATTER_FAIL, 'Symfony\Component\Console\Formatter\OutputFormatterStyle');
-        $def->setArguments(['red', null, ['bold']]);
+        $def->setArguments(['red', null, []]);
 
         $def = $container->register(self::ID_OUTPUT_FORMATTER_PASS, 'Symfony\Component\Console\Formatter\OutputFormatterStyle');
-        $def->setArguments(['green', null, ['bold']]);
+        $def->setArguments(['green', null, []]);
     }
 
     protected function processControllers(ContainerBuilder $container, ContainerHelper $helper)

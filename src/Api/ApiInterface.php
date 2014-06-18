@@ -10,13 +10,13 @@
 namespace PhpTest\Api;
 
 use PhpTest\Loader\LoaderCollection;
-use PhpTest\Result\Handler\HandlerInterface;
+use PhpTest\SuiteInterface;
 
 interface ApiInterface
 {
     /**
      * @param LoaderCollection $loaders
-     * @param HandlerInterface $handler
+     * @param SuiteInterface $suite
      */
-    public function execute(LoaderCollection $loaders, HandlerInterface $handler);
+    public function load(LoaderCollection $loaders, SuiteInterface $suite);
 }

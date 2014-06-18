@@ -12,7 +12,7 @@ namespace PhpTest\Api\ServiceContainer;
 use PhpTest\Api\Functional\ServiceContainer\FunctionalApiExtension;
 use PhpTest\Cli\ServiceContainer\CliExtension;
 use PhpTest\Loader\ServiceContainer\LoaderExtension;
-use PhpTest\Result\ServiceContainer\ResultExtension;
+use PhpTest\Suite\ServiceContainer\SuiteExtension;
 use PhpTest\ServiceContainer\ContainerHelper;
 use PhpTest\ServiceContainer\ExtensionInterface;
 use PhpTest\ServiceContainer\ExtensionManager;
@@ -48,7 +48,7 @@ class ApiExtension implements ExtensionInterface
         $def->setArguments([
             new Reference(self::ID_MANAGER),
             new Reference(LoaderExtension::ID_COLLECTION),
-            new Reference(ResultExtension::ID_HANDLER)
+            new Reference(SuiteExtension::ID_SUITE)
         ]);
     }
 

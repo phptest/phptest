@@ -26,16 +26,6 @@ class SuiteRegistry
     protected $current;
 
     /**
-     * @param SuiteInterface $suite
-     */
-    public function __construct(SuiteInterface $suite = null)
-    {
-        if ($suite) {
-            $this->setCurrentSuite($suite);
-        }
-    }
-
-    /**
      * @return SuiteRegistry
      */
     public static function getInstance()

@@ -12,7 +12,7 @@ namespace PhpTest\Api\Cli;
 use PhpTest\Api\ApiManager;
 use PhpTest\Cli\ControllerInterface;
 use PhpTest\Loader\LoaderCollection;
-use PhpTest\Result\Handler\HandlerInterface;
+use PhpTest\SuiteInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -25,12 +25,7 @@ class ApiController implements ControllerInterface
     /**
      * @var LoaderCollection
      */
-    protected $collection;
-
-    /**
-     * @var HandlerInterface
-     */
-    protected $handler;
+    protected $loaders;
 
     /**
      * @var ApiManager
@@ -38,15 +33,20 @@ class ApiController implements ControllerInterface
     protected $manager;
 
     /**
-     * @param ApiManager $manager
-     * @param LoaderCollection $collection
-     * @param HandlerInterface $handler
+     * @var SuiteInterface
      */
-    public function __construct(ApiManager $manager, LoaderCollection $collection, HandlerInterface $handler)
+    protected $suite;
+
+    /**
+     * @param ApiManager $manager
+     * @param LoaderCollection $loaders
+     * @param SuiteInterface $suite
+     */
+    public function __construct(ApiManager $manager, LoaderCollection $loaders, SuiteInterface $suite)
     {
-        $this->collection = $collection;
-        $this->handler = $handler;
+        $this->loaders = $loaders;
         $this->manager = $manager;
+        $this->suite   = $suite;
     }
 
     /**
@@ -67,6 +67,6 @@ class ApiController implements ControllerInterface
     {
         $api = $this->manager->get($input->getOption(self::OPT_API));
 
-        $api->execute($this->collection, $this->handler);
+        $api->load($this->loaders, $this->suite);
     }
 }

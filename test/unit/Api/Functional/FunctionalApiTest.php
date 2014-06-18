@@ -10,19 +10,19 @@ class FunctionalApiTest extends TestCase
     public function setUp()
     {
         $this->collection = Mockery::mock('PhpTest\Loader\LoaderCollection');
-        $this->handler = Mockery::mock('PhpTest\Result\Handler\HandlerInterface');
+        $this->suite = Mockery::mock('PhpTest\SuiteInterface');
         $this->loader = Mockery::mock('PhpTest\Loader\LoaderInterface');
         $this->registry = Mockery::mock('PhpTest\Api\Functional\SuiteRegistry');
 
         $this->api = new FunctionalApi($this->registry, false);
     }
 
-    public function testExecute()
+    public function testLoad()
     {
         $this->loader->shouldReceive('load')->once()->withNoArgs();
         $this->collection->shouldReceive('getIterator')->once()->withNoArgs()->andReturn(new ArrayIterator([$this->loader]));
-        $this->registry->shouldReceive('setCurrentSuite')->once()->with(Mockery::type('PhpTest\SuiteInterface'));
+        $this->registry->shouldReceive('setCurrentSuite')->once()->with($this->suite);
 
-        $this->api->execute($this->collection, $this->handler);
+        $this->api->load($this->collection, $this->suite);
     }
 }
