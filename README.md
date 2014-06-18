@@ -32,16 +32,6 @@ The functional API adds support for testing with simple closures, as you would
 with any functional language. Further usage examples can be found in
 [`example/functional`][example-fn].
 
-#### suite(string $name, callable $fn);<br/>PhpTest\Api\Functional\fn\suite(string $name, callable $fn);
- > Registers a suite of tests with the parent/root test suite. The callable
-function given is invoked immediately to register the tests within.
-
-#### test(string $name, callable $fn, array[] $args);<br/>PhpTest\Api\Functional\fn\test(string $name, callable $fn, array[] $args);
- > Registers a single test with the parent test suite. The callable function is
-only invoked at API execution time (when all tests are invoked together). You
-can optionally pass an array of argument arrays to execute the test with. This
-is similar to the data providers in PHPUnit.
-
 ```php
 <?php
 
@@ -58,7 +48,7 @@ suite('suite name', function () {
         });
 
         test('nested test with args', function ($arg) {
-            // each array in the list creates a separate test
+            // each args array creates a separate test
         }, [['foo'], ['bar']]);
 
     });

@@ -22,7 +22,7 @@ suite('suite name', function () {
         });
 
         test('nested test with args', function ($arg) {
-            // each array in the list creates a separate test
+            // each args array creates a separate test
         }, [['foo'], ['bar']]);
 
     });
